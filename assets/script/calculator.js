@@ -24,7 +24,7 @@ class Calculator{
     processOperation(operation){
         //check if it is empty
 
-        if(this.currentOperationText.innerText === ""){
+        if(this.currentOperationText.innerText === "" && operation != "C"){
             //change the operation
             if(this.previousOperationText.innerText !== ""){
                 this.changeOperation(operation);
@@ -56,6 +56,23 @@ class Calculator{
             case "/":
                 operationValue = current / current;
                 this.updateScreen(operationValue, operation, current, previous);
+                break;
+
+            case "Del":
+                this.processDelOperator();
+                break;
+
+            case "CE":
+                this.processClearCurrentsOperator();
+                break;
+
+
+            case "C":
+                this.processClearOperator();
+                break;
+
+            case "=":
+                this.processEqualOperator();
                 break;
 
             default:
@@ -96,6 +113,28 @@ class Calculator{
         this.previousOperationText.innerText = this.previousOperationText.innerText.slice(0, -1) + operation;
     }
 
+    //deleting the last digit
+    processDelOperator(){
+        this.currentOperationText.innerText = this.currentOperationText.innerText.slice(0, -1);
+    }
+
+    //clear current operation
+    processClearCurrentsOperator(){
+        this.currentOperationText.innerText = "";
+    }
+
+    //clear all
+    processClearOperator(){
+        this.currentOperationText.innerText = "";
+        this.previousOperationText.innerText = "";
+    }
+
+    //result of the operations
+    processEqualOperator(){
+        const operation = previousOperationText.innerText.split(" ")[1];
+    
+        this.processOperation(operation);
+    }
 }
 
 const calc = new Calculator(previousOperationText, currentOperationText);
